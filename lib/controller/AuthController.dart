@@ -89,6 +89,7 @@ class AuthController extends ChangeNotifier {
     var res =
     await firestore.collection("users").doc(docId).get();
     user = UserModel.fromJson(res.data());
+    notifyListeners();
   }
 
   loginGoogle(VoidCallback onSuccess) async {
@@ -281,5 +282,7 @@ class AuthController extends ChangeNotifier {
     isFacebookLoading = false;
     notifyListeners();
   }
+
+
 
 }

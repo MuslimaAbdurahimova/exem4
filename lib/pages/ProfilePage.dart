@@ -1,6 +1,10 @@
 import 'package:exem4/controller/AuthController.dart';
+import 'package:exem4/local_store/local.dart';
+import 'package:exem4/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'components/custom_image.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -17,6 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,19 +32,25 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 35,
             ),
             Center(
-              child: SizedBox(
-                height: 100,
-                child: ClipOval(
-                  child: Image.network(
-                    context.watch<AuthController>().user?.avatar ?? '',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+                child: CustomImageNetwork(
+                    image: context.watch<AuthController>().user?.avatar ?? '')),
+            const SizedBox(
+              height: 12,
             ),
-            const SizedBox(height: 12,),
-            Text(context.watch<AuthController>().user?.name ?? '',),
-            Text(context.watch<AuthController>().user?.email ?? '',),
+            Text(
+              context.watch<AuthController>().user?.name ?? '',
+            ),
+            Text(
+              context.watch<AuthController>().user?.email ?? '',
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  LocalStore.storeClear();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => SignUpPage()),
+                      (route) => false);
+                },
+                child: Text("LogOut")),
           ],
         ),
       ),

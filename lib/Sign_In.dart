@@ -1,10 +1,10 @@
+import 'package:exem4/pages/ProfilePage.dart';
 import 'package:exem4/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'Profile_page.dart';
 import 'controller/AuthController.dart';
 
 class SignInPage extends StatefulWidget {
@@ -190,7 +190,7 @@ class _SignInPageState extends State<SignInPage> {
               30.h.verticalSpace,
               GestureDetector(
                 onTap: () {
-                  if (formKey.currentState?.validate() ?? false) {
+                  if (email.text.isNotEmpty && password.text.isNotEmpty) {
                     context.read<AuthController>().login(
                         email.text, password.text, () {
                       Navigator.of(context).pushAndRemoveUntil(
